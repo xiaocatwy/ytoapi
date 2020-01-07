@@ -1,0 +1,68 @@
+{%extends "admin/_base.html"%}
+{%block content%}
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">个人信息</a>
+                <a>
+                    <cite>个人信息</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+            </a>
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                         <div class="layui-card-body layui-table-body layui-table-main">
+                            <table class="layui-table layui-form">
+                            {%for d in data %}
+                                    <tr>
+                                        <th>用户名</th>
+                                        <td>{{ d.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>电话</th>
+                                        <td>{{ d.phone }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>层级</th>
+                                        <td>{{ d.level }}级</td>
+                                    </tr>
+                                    <tr>
+                                        <th>邀请链接</th>
+                                        <td><textarea readonly="readonly" cols="30" rows="5" id="biao1">{{ invite_url }}</textarea>
+                                            <input  type="button" onClick="copyUrl2()" value="复制" /></td>
+                                    </tr>
+
+                            {% endfor %}
+                            </table>
+                         <div>
+                             <h2 style="text-align: center">邀请新用户,丰厚奖励等你拿!! 每邀请注册成功并完成首冲100元,即奖励10元,受邀请人使用单号支付的服务费5%,作为邀请人的佣金(永久累计)!!!</h2>
+                         </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        layui.use(['form', 'layer'],
+            function() {
+                $ = layui.jquery;
+                var form = layui.form,
+                    layer = layui.layer;
+            })
+    </script>
+    <script type="text/javascript">
+        function copyUrl2()
+        {
+        var Url2=document.getElementById("biao1");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("已复制好,可贴粘。");
+        }
+</script>
+ {%endblock%}

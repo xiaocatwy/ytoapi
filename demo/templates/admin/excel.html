@@ -1,0 +1,48 @@
+{%extends "admin/_base.html"%}
+{%block content%}
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">圆通订单</a>
+                <a>
+                    <cite>批量下单</cite></a>
+            </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       onclick="location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+    </a>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form" enctype="multipart/form-data">
+        </form>
+    </div>
+    <div class="layui-row">
+        <center><h2 style="color: #ff1521">批量下单若使用默认地址时,请确认是否添加默认地址,再进行下单！</h2></center>
+        <center><h3>批量excel提交: <a style="color: #0000FF" href="/order/download">下载模板</a></h3></center>
+    </div>
+</div>
+
+<div class="layui-row">
+    <center>
+        <form class="layui-form" enctype="multipart/form-data" action="/order/upload" method="post">
+            <div class="layui-input-inline">
+                <input type="file" name="ytofile" autocomplete="off" class="layui-input">
+
+            </div>
+            <button type="submit" class="layui-btn">
+                提交订单
+            </button>
+
+        </form>
+    </center>
+</div>
+</div>
+<script>
+
+    function device_export() {
+        $("#deviceform").attr("action", "/order/upload").submit();
+        alert("已提交")
+    }
+</script>
+{% endblock %}

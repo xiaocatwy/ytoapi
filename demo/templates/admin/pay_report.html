@@ -1,0 +1,81 @@
+{% extends "admin/_base.html" %}
+{% block content %}
+<center>    <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">充值记录</a>
+                <a>
+                    <cite>充值记录</cite></a>
+            </span>
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+           onclick="location.reload()" title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+        </a>
+    </div>
+
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body ">
+                        <form class="layui-form layui-col-space5">
+                               <div class="layui-input-inline layui-show-xs-block">
+                                    <input type="text" name="out_trade_no" id="out_trade_no" value="{{kargs.get('out_trade_no','')}}" placeholder="订单编号" autocomplete="off" class="layui-input">
+                               </div>
+                            <div class="layui-input-inline layui-show-xs-block">
+                                    <input type="text" name="user_id" value="{{kargs.get('user_id','')}}" placeholder="用户ID" autocomplete="off" class="layui-input">
+                                </div>
+                            <div class="layui-input-inline layui-show-xs-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                    <i class="layui-icon">&#xe615;</i></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-card-body layui-table-body layui-table-main">
+                        <table class="layui-table layui-form">
+                            <thead>
+                            <tr>
+                                <th>用户ID</th>
+                                <th>商品名称</th>
+                                <th>订单编号</th>
+                                <th>总金额</th>
+                                <th>支付成功时间</th>
+                                <th>状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for d in data.result %}
+                                <tr>
+                                <td>{{ d.user_id }}</td>
+                                <td>{{ d.product }}</td>
+                                <td>{{ d.out_trade_no }}</td>
+                                <td>{{ d.total_fee }}</td>
+                                <td>{{ d.pay_time }}</td>
+                                <td>
+                                    {%if d.status==False%}
+                                        <button><a  class="layui-btn layui-btn-normal" target="_blank" href="https://openapi.alipay.com/gateway.do?{{d.ali_pay_str}}">支付</a></button>
+                                    {%else%}
+                                        支付成功
+                                    {%endif%}
+                                </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layui-card-body ">
+                        {{ data.render()}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        layui.use(['form', 'layer', "laydate"],
+            function() {
+                $ = layui.jquery;
+                laydate = layui.laydate;
+            });</script>
+{% endblock %}
+    </center>

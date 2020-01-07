@@ -1,0 +1,98 @@
+{%extends "admin/_base.html"%}
+{%block content%}
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">余额管理</a>
+                <a>
+                    <cite>余额管理</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+            </a>
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                         <div class="layui-card-body layui-table-body layui-table-main">
+                            <table class="layui-table layui-form">
+                            {%for d in data %}
+                                        <div  class="layui-container" >
+                                        <div class="layui-row">
+                                          <div class="layui-col-md4">
+                                              <h2>所剩余额(元):</h2>
+                                        </div>
+                                        <div class="layui-col-md4">
+                                          <h1 id="amount" >{{ d.amount | round(2)}}</h1>
+                                        </div>
+                                          <div class="layui-col-md4">
+                                              <a class="layui-btn layui-btn-normal" href="/balance/add" target="_blank">充值</a>
+                                        </div>
+                                        </div>
+                                        </diV>
+                                        <div  class="layui-container" >
+                                        <br>
+                                        </diV>
+                                        <div  class="layui-container" >
+                                        <div class="layui-row">
+                                          <div class="layui-col-md4">
+                                              <h2>佣金金额(元):</h2>
+                                        </div>
+                                        <div class="layui-col-md4">
+                                          <h1 id="commission">{{ d.commission | round(2)}}</h1><h1></h1>
+                                        </div>
+                                          <div class="layui-col-md4">
+                                              <button type="button" id="cash_money"  class="layui-btn layui-btn-normal" >提现</button>
+                                        </div>
+                                        </div>
+                                        </diV>
+                            {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        layui.use(['form', 'layer'],
+            function() {
+                $ = layui.jquery;
+                var form = layui.form,
+                    layer = layui.layer;
+            })
+    </script>
+    <script>
+     $('#cash_money').on('click', function(){
+            layer.confirm('确定提现吗？', {
+                btn: ['确定','取消']
+                }, function(){
+                var amount = $("#amount").text();
+            var commission = $("#commission").text();
+            $.ajax({
+                url: "/commission/cash",
+                method: "post",
+                data: {"amount": amount,"commission": commission},
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.code == 0) {
+                        alert(data.info);
+                        window.location.reload()
+                    } else {
+                       　alert(data.info);
+                        window.location.reload()
+                    }
+                }
+                });
+                }, function(){
+
+                    layer.msg('已取消', {
+
+                    time: 2000,
+
+                });
+            });
+        });
+       </script>
+ {%endblock%}

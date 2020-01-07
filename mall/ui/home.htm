@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta https-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>帮你选</title>
+    <link rel="stylesheet" href="/static/sm.min.css">
+    <style>
+        body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select{margin:0;padding:0}body{min-width:320px;font-size:1em;font-family:'microsoft yahei',Verdana,Arial,Helvetica,sans-serif;color:#000;-webkit-text-size-adjust:none}.new-p-box{display:block;position:relative}.new-txt-rd{color:#c33}.new-txt-rd2{color:#e4393c}.new-txt6c{color:#6c6c6c}.new-txt0e{color:#0e0e0e}.new-txt00f{color:#00f}.new-ft12{font-size:12px}.new-ft14{font-size:14px}.new-ft16{font-size:16px}.new-elps{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.new-fl{float:left}.new-fr{float:right}.new-tbl-type{display:table;width:100%}.new-tbl-cell{display:table-cell}.new-p-re{position:relative}
+        html{
+            margin: 0;
+        }
+        body {
+            width: 100%;
+            max-width: 750px;
+            margin: 0 auto;
+            cursor: pointer;
+            backface-visibility: hidden;
+            /* 隐藏被旋转的 div 元素的背面，开启GPU硬件加速 */
+            -webkit-backface-visibility: hidden;
+            /* Chrome 和 Safari */
+            -moz-backface-visibility: hidden;
+            /* Firefox */
+            -ms-backface-visibility: hidden;
+            /* Internet Explorer */
+            -webkit-transform: translate3d(0, 0, 0);
+            /* 3D旋转，开启GPU硬件加速 */
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            -webkit-perspective: 1000;
+            /* 3D元素距视图的距离，解决开启GPU硬件加速部分Android出现闪烁的bug */
+            -moz-perspective: 1000;
+            -ms-perspective: 1000;
+            perspective: 1000;
+        }
+        .content_li{
+            clear:both;
+            margin-top: 1%;
+        }
+        .imgDivs{
+            float: left;
+            width: 50%;
+        }
+        .imgDivs img{
+            width: 90%;
+            height: auto;
+            margin-left: 2%;
+            margin-top: 1%;
+        }
+        .imgDvisRight{
+            float: right;
+            width: 50%;
+        }
+        .imgDvisRightSpan{
+            font-size: 1em;
+            font-weight: 600;
+            margin-top: 0.5em;;
+        }
+        .imgDvisRightContent{
+            width: 95%;
+            height: 8em;
+            font-size: 0.8em;
+            color: #9d9d9d;
+        }
+        .weiguan{
+            width: 95%;
+            color: #8815fc;
+            font-size: 0.8em;
+        }
+        .focusMap{
+            margin: 0 auto;
+        }
+        .header{
+            background: url('http://static.towmall.cn/image/advert/img/top.png');
+            background-size: 100% 100%;
+            width: 100%;
+            height: 3.7em;
+            /*height: 6em;*/
+            clear: both;
+        }
+        .header .navDiv{
+            float: left;
+            width: 33%;
+            margin-top: 1em;
+        }
+        .navDiv a{text-decoration: none;}
+        .navDiv span{
+            font-size: 1em;
+        }
+        .sel_color{
+            color:#fff;
+            margin: 0 auto;
+        }
+        .on_color{
+            color:#c79dfd;
+        }
+        .titleHr{
+            color:#fff;
+            font-size:1.6em;
+            margin-bottom: .5em;
+        }
+        .margin_left1{
+            margin-left: 0.4em;
+        }
+        .margin_left2{
+            margin-left: 0.5em;
+        }
+        .margin_left3{
+            margin-left: 1em;
+        }
+        .banner{position:relative;width:100%;overflow:hidden}.new-banner-num{position:absolute;left:0;bottom:3px;width:100%;height:10px;text-align:center}.new-banner-num .new-tbl-cell{display:inline-block;width:7px;height:7px;margin-left:7px;border-radius:6px;background-color:#fff;text-indent:-9999px}.new-banner-num .new-tbl-cell a{display:block}.new-banner-num .new-tbl-cell.on{background-color:#e4393c}.scroll-wrapper{width:100%;margin:0 auto;max-width:100%;overflow:hidden}.scroll-wrapper .scroller{list-style:none}.scroll-wrapper .scroller li{float:left;text-align:center}.scroll-wrapper .scroller li img{width:100%;  min-width:320px;max-width:100%;height:auto!important;}.footee{bottom:0; margin: 0 auto; width:100%; color:#000;}
+        .bottom-info{
+            padding:1% 0;
+            text-align:center;
+            border-top:1px solid #eee;
+        }
+</style>
+    <script src="/static/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+<div class="page-group">
+    <div class="page page-current" style="overflow:auto;">
+        <div class="header">
+            <div class="navDiv" align="center">
+                <div><a href="#"><span class="on_color"></span>
+                </a></div>
+            </div>
+            <div class="navDiv">
+                <div align="center"><a href="http://static.dwodai.com/html/h5/product-13.html">
+                    <img src="/static/cf.png" height="15" width="20"> <span class="sel_color">创意厨房</span>
+                </a></div>
+
+            </div>
+            <div class="navDiv">
+                <div align="center"><a href="#"> <span class="on_color"></span>
+                </a></div>
+            </div>
+        </div>
+        <div class="focusMap">
+            <div class="banner scroll-wrapper" id="idContainer2" ontouchstart="touchStart(event)"
+                 ontouchmove="touchMove(event);" ontouchend="touchEnd(event);" style="overflow: hidden;">
+                <ul class="scroller" style="position: relative; left: 0px; width: 200%;" id="idSlider2">
+                    <li style="width: 750px;"><a target="_blank"
+                                                 onclick="onFocusClick(3,58,&#39;http://www.towmall.cn/169812773005.html?wfid=zjjtd&#39;,0,&#39;img&#39;)"><img
+                            src="/static/微信图片_20171220105509.png" alt=""></a></li>
+                    <li style="width: 750px;"><a target="_blank"
+                                                 onclick="onFocusClick(3,90,&#39;http://static.towmall.cn/html/mall/goods/twomall0039.html&#39;,1,&#39;img&#39;)"><img
+                            src="/static/微信图片_20171228100305.png" alt=""></a></li>
+                </ul>
+                <ul class="new-banner-num new-tbl-type" id="idNum">
+                    <li class="new-tbl-cell on"></li>
+                    <li class="new-tbl-cell"></li>
+                </ul>
+            </div>
+            <input type="hidden" value="2" id="activity">
+
+        </div>
+        <div class="content_list">
+            <div class="content_li">
+                <div class="imgDivs"><a target="_blank" class="btn" data-clipboard-action="copy"
+                                        data-clipboard-target="#foo"
+                                    onclick="onAdvClick(3,394,'/order?order_id=0b94f64831840137','11')">
+                    <img
+                        src="/static/386811567178480032.png"></a></div>
+                <div class="imgDvisRight btn" data-clipboard-action="copy" data-clipboard-target="#foo"
+                     onclick="onAdvClick(3,394,'/order?order_id=0b94f64831840137','11')">
+                    <div class="imgDvisRightSpan">魔术硅胶洗碗家用手套</div>
+                    <div class="imgDvisRightContent">硅胶洗碗手套 韩国魔术厨房多功能刷碗手套耐高温不伤手</div>
+                    <div class="weiguan" align="right"><img src="/static/hotl.png" height="18em">&nbsp;4278人围观</div>
+                </div>
+            </div>
+            <div class="content_li">
+                <div class="imgDivs"><a target="_blank" class="btn" data-clipboard-action="copy"
+                                        data-clipboard-target="#foo" onclick="onAdvClick(3,394,'/order?order_id=91c4e92cc5af043e','11')">
+                    <img
+                        src="/static/主1.png"></a></div>
+                <div class="imgDvisRight btn" data-clipboard-action="copy" data-clipboard-target="#foo"
+                     onclick="onAdvClick(3,394,'/order?order_id=91c4e92cc5af043e','11')">
+                    <div class="imgDvisRightSpan">硅胶雪糕模具榨汁套装</div>
+                    <div class="imgDvisRightContent">欧烹硅胶雪糕模具榨汁套装 冰淇淋模具无毒自制冰糕冰格冰棍棒冰模具</div>
+                    <div class="weiguan" align="right"><img src="/static/hotl.png" height="18em">&nbsp;6752人围观</div>
+                </div>
+            </div>
+            <div class="content_li">
+                <div class="imgDivs"><a target="_blank" class="btn" data-clipboard-action="copy"
+                                        data-clipboard-target="#foo"
+                                        onclick="onAdvClick(3,394,'/order?order_id=aad094e0b5cb1b01','11')">
+                                        <img
+                        src="/static/300x300.jpg"></a></div>
+                <div class="imgDvisRight btn" data-clipboard-action="copy" data-clipboard-target="#foo"
+                     onclick="onAdvClick(3,394,'/order?order_id=aad094e0b5cb1b01','11')">
+                    <div class="imgDvisRightSpan">电动抽水器</div>
+                    <div class="imgDvisRightContent">桶装水电动抽水器，限时特价，微信支付再打7折！！ USB充电，饮水机家用纯净水桶压水器，自动上水一键抽水，高品质材...</div>
+                    <div class="weiguan" align="right"><img src="/static/hotl.png" height="18em">&nbsp;8765人围观</div>
+                </div>
+            </div>
+            <div class="content_li">
+                <div class="imgDivs"><a target="_blank" class="btn" data-clipboard-action="copy"
+                                        data-clipboard-target="#foo"
+                                       onclick="onAdvClick(3,394,'/order?order_id=0ee742f6dddaa13f','11')"><img
+                        src="/static/731778ff8346937f5c0dc603c2305e5a.png"></a></div>
+                <div class="imgDvisRight btn" data-clipboard-action="copy" data-clipboard-target="#foo"
+                     onclick="onAdvClick(3,394,'/order?order_id=4','11')">
+                    <div class="imgDvisRightSpan">天然石榴石手链</div>
+                    <div class="imgDvisRightContent">女性之石，特价天然水晶石榴石手链，本命年礼物手串，下单送价值120元的黑曜石旺财葫芦一个！！！</div>
+                    <div class="weiguan" align="right"><img src="/static/hotl.png" height="18em">&nbsp;9899人围观</div>
+                </div>
+            </div>
+            <div class="content_li">
+                <div class="imgDivs"><a target="_blank" class="btn" data-clipboard-action="copy"
+                                        data-clipboard-target="#foo"
+                                        onclick="onAdvClick(3,394,'/order?order_id=af686bdb4edca223','11')"><img
+                        src="/static/42d53a1d1d635e9c5cccbb7223090bf5.png"></a></div>
+                <div class="imgDvisRight btn" data-clipboard-action="copy" data-clipboard-target="#foo"
+                      onclick="onAdvClick(3,394,'/order?order_id=af686bdb4edca223','11')">
+                    <div class="imgDvisRightSpan">高端无油烟炒锅</div>
+                    <div class="imgDvisRightContent">下单送全钢原装煎锅！德国工艺，全身食用级304精钢打造，物理蜂窝防粘处理技术。健康环保，无油烟，易清洗....</div>
+                    <div class="weiguan" align="right"><img src="/static/hotl.png" height="18em">&nbsp;5677人围观</div>
+                </div>
+            </div>
+            <div class="content_li">
+                <div class="imgDivs"><a target="_blank" class="btn" data-clipboard-action="copy"
+                                        data-clipboard-target="#foo"
+                    onclick="onAdvClick(3,394,'/order?order_id=b8ff85d0a6a8365d','11')">
+                    <img
+                        src="/static/20180408170244.png"></a></div>
+                <div class="imgDvisRight btn" data-clipboard-action="copy" data-clipboard-target="#foo"
+                     onclick="onAdvClick(3,394,'/order?order_id=b8ff85d0a6a8365d','11')">
+                    <div class="imgDvisRightSpan">欧烹官方旗舰店电动抽水</div>
+                    <div class="imgDvisRightContent">桶装水电动抽水器 USB充电饮水机家用纯净水桶压水器自动上水 一键抽水</div>
+                    <div class="weiguan" align="right"><img src="/static/hotl.png" height="18em">&nbsp;6054人围观</div>
+                </div>
+            </div>
+            <div class="content_li bottom-info">
+                2019 渝ICP备19011290号
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/clipboard.min.js"></script>
+<script>
+
+    var clipboard = new Clipboard('.btn');
+    clipboard.on('success', function(e) {
+        e.clearSelection();
+    });
+
+    clipboard.on('error', function(e) {
+        var inputText = document.getElementById('foo');
+        var currentFocus = document.activeElement;
+        inputText.focus();
+        inputText.setSelectionRange(0, inputText.value.length);
+        document.execCommand('copy', true);
+        currentFocus.focus();
+    });
+    var nums_input = Math.round(Math.random());
+    if(nums_input == 0){
+        document.getElementById('foo').value = '';
+    }else if(nums_input == 1){
+        document.getElementById('foo').value = '';
+    }else if(nums_input == 2){
+        document.getElementById('foo').value = '';
+    }
+
+</script>
+<script>
+    function closeDiv2017() {
+        document.getElementById('advert20170918').style.display = 'none';
+    }
+    function onAdvClick(wechatId,adverId,link,type){
+        window.open(link);
+    }
+
+    function onFocusClick(wechatId,focuId,link,type){
+        // 服务器记录
+        var h5_url = "/h5/wechat/count/banner?wechatId="+wechatId+"&bannerId="+focuId;
+        $.getJSON(h5_url,function(data){
+        });
+        _czc.push(["_trackEvent","焦点图",wechatId+'-'+focuId+'-'+type]);
+        // cnzz 记录
+        window.open(link);
+    }
+
+    
+    /* if(bool2018 == 1){
+     document.getElementById('advert20170918').style.display = 'block';
+     }*/
+
+
+    //活动轮播图
+    var picCount = $("#activity").val();
+    $(".pic-num1").css("width",(picCount*30)+"px");
+    var forEach = function(array, callback){
+        for (var i = 0, len = array.length; i < len; i++) { callback.call(this, array[i], i); }
+    }
+    var st = createPicMove("idContainer2", "idSlider2", picCount);	//图片数量更改后需更改此数值
+    var nums = [];
+    //插入数字
+    for(var i = 0, n = st._count - 1; i <= n;i++){
+        var li = document.createElement("li");
+        nums[i] = document.getElementById("idNum").appendChild(li);
+    }
+    //设置按钮样式
+    st.onStart = function(){
+//forEach(nums, function(o, i){ o.className = ""})
+        forEach(nums, function(o, i){ o.className = st.Index == i ? "new-tbl-cell on" : "new-tbl-cell"; })
+    }
+    // 重新设置浮动
+    $("#idSlider2").css("position","relative");
+    var _initX = 0;
+    var _finishX = 0;
+    var _startX = 0;
+    var _startY = 0;
+
+    function touchStart(event) {
+        _startX = event.touches[0].clientX;
+        _startY = event.touches[0].clientY;
+        _initX = _startX;
+    }
+
+    function touchMove(event) {
+        var touches = event.touches;
+        var _endX = event.touches[0].clientX;
+        var _endY = event.touches[0].clientY;
+
+        if(Math.abs(_endY-_startY)>Math.abs(_endX-_startX)){
+            return;
+        }
+        event.preventDefault();
+        _finishX = _endX;
+        var _absX = Math.abs(_endX-_startX);
+        var lastX = $('#idSlider2').css('left').replace('px','');
+        if(_startX>_endX){
+            st.Stop();
+            $('#idSlider2').css('left',(parseInt(lastX)-_absX)+'px');
+        }else{
+            st.Stop();
+            $('#idSlider2').css('left',(parseInt(lastX)+_absX)+'px');
+        }
+        _startX = _endX;
+    }
+    //触屏  离开屏幕事件
+
+    function touchEnd(event) {
+        if(_finishX==0){
+            return;
+        }
+        if(_initX>_finishX){
+            bindEvent(_initX,_finishX);
+        }else if(_initX<_finishX){
+            bindEvent(_initX,_finishX);
+        }
+        _initX = 0;
+        _finishX = 0;
+    }
+    /**
+     *  绑定触屏触发事件
+     * @param start
+     * @param end
+     */
+
+    function bindEvent(start,end){
+        if (start >= end) {
+            st.Next();
+        } else {
+            st.Previous();
+        }
+    }
+    st.Run();
+    var resetScrollEle = function(){
+        $("#shelper").css("width",$("#newkeyword").width()+"px");
+        var slider2Li = $("#idSlider2 li");
+        slider2Li.css("width",$(".scroll-wrapper").width()+"px");
+        $("#shelper").css("width",$("#newkeyword").width()+"px");
+    }
+
+    window.addEventListener("resize",function(){
+        st.Change = st._slider.offsetWidth/st._count;
+        st.Next();
+        resetScrollEle();
+    });
+    window.addEventListener("orientationchange",function(){
+        st.Change = st._slider.offsetWidth/st._count;
+        st.Next();
+        resetScrollEle();
+    })
+    resetScrollEle();
+    /** 用 **/
+    function createPicMove(a, b, c) {
+        var g = function (j) {
+            return "string" == typeof j ? document.getElementById(j) : j
+        };
+        var d = function (j, l) {
+            for (var k in l) {
+                j[k] = l[k]
+            }
+            return j
+        };
+        var f = function (j) {
+            return j.currentStyle || document.defaultView.getComputedStyle(j, null)
+        };
+        var i = function (l, j) {
+            var k = Array.prototype.slice.call(arguments).slice(2);
+            return function () {
+                return j.apply(l, k.concat(Array.prototype.slice.call(arguments)))
+            }
+        };
+        var e = {
+            Quart: {
+                easeOut: function (k, j, m, l) {
+                    return -m * ((k = k / l - 1) * k * k * k - 1) + j
+                }
+            }, Back: {
+                easeOut: function (k, j, n, m, l) {
+                    if (l == undefined) {
+                        l = 1.70158
+                    }
+                    return n * ((k = k / m - 1) * k * ((l + 1) * k + l) + 1) + j
+                }
+            }, Bounce: {
+                easeOut: function (k, j, m, l) {
+                    if ((k /= l) < (1 / 2.75)) {
+                        return m * (7.5625 * k * k) + j
+                    } else {
+                        if (k < (2 / 2.75)) {
+                            return m * (7.5625 * (k -= (1.5 / 2.75)) * k + 0.75) + j
+                        } else {
+                            if (k < (2.5 / 2.75)) {
+                                return m * (7.5625 * (k -= (2.25 / 2.75)) * k + 0.9375) + j
+                            } else {
+                                return m * (7.5625 * (k -= (2.625 / 2.75)) * k + 0.984375) + j
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        var h = function (k, n, m, l) {
+            this._slider = g(n);
+            this._container = g(k);
+            this._timer = null;
+            this._count = Math.abs(m);
+            this._target = 0;
+            this._t = this._b = this._c = 0;
+            this.Index = 0;
+            this.SetOptions(l);
+            this.Auto = !!this.options.Auto;
+            this.Duration = Math.abs(this.options.Duration);
+            this.Time = Math.abs(this.options.Time);
+            this.Pause = Math.abs(this.options.Pause);
+            this.Tween = this.options.Tween;
+            this.onStart = this.options.onStart;
+            this.onFinish = this.options.onFinish;
+            var j = !!this.options.Vertical;
+            this._css = j ? "top" : "left";
+            var o = f(this._container).position;
+            o == "relative" || o == "absolute" || (this._container.style.position = "relative");
+            this._container.style.overflow = "hidden";
+            this._slider.style.position = "absolute";
+            this.Change = this.options.Change ? this.options.Change : this._slider[j ? "offsetHeight" : "offsetWidth"] / this._count
+        };
+        h.prototype = {
+            SetOptions: function (j) {
+                this.options = {
+                    Vertical: true,
+                    Auto: true,
+                    Change: 0,
+                    Duration: 50,
+                    Time: 10,
+                    Pause: 4000,
+                    onStart: function () {
+                    },
+                    onFinish: function () {
+                    },
+                    Tween: e.Quart.easeOut
+                };
+                d(this.options, j || {})
+            }, Run: function (j) {
+                j == undefined && (j = this.Index);
+                j < 0 && (j = this._count - 1) || j >= this._count && (j = 0);
+                this._target = -Math.abs(this.Change) * (this.Index = j);
+                this._t = 0;
+                this._b = parseInt(f(this._slider)[this.options.Vertical ? "top" : "left"]);
+                this._c = this._target - this._b;
+                this.onStart();
+                this.Move()
+            }, Move: function () {
+                clearTimeout(this._timer);
+                if (this._c && this._t < this.Duration) {
+                    this.MoveTo(Math.round(this.Tween(this._t++, this._b, this._c, this.Duration)));
+                    this._timer = setTimeout(i(this, this.Move), this.Time)
+                } else {
+                    this.MoveTo(this._target);
+                    this.Auto && (this._timer = setTimeout(i(this, this.Next), this.Pause))
+                }
+            }, MoveTo: function (j) {
+                this._slider.style[this._css] = j + "px"
+            }, Next: function () {
+                this.Run(++this.Index)
+            }, Previous: function () {
+                this.Run(--this.Index)
+            }, Stop: function () {
+                clearTimeout(this._timer);
+                this.MoveTo(this._target)
+            }
+        };
+        return new h(a, b, c, {Vertical: false})
+    }
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        if (window.history && window.history.pushState) {
+            $(window).on('popstate', function () {
+                var hashLocation = location.hash;
+                var hashSplit = hashLocation.split('#!/');
+                var hashName = hashSplit[1];
+                if (hashName !== '') {
+                    var hash = window.location.hash;
+                    var link = 'RETURN_LINK';
+                    if (hash === '' && link != '' && link !='RETURN'+'_LINK') {
+                        _czc.push(["_trackEvent","返回",'3']);
+                       window.location.href = link+'';
+                    }
+                }
+            });
+            window.history.pushState('forward', null, '#forward');
+        }
+    })
+</script>
+
+</body>
+</html>

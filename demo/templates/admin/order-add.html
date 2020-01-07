@@ -1,0 +1,191 @@
+{%extends "admin/_base.html"%}
+{%block content%}
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">圆通订单</a>
+                <a>
+                    <cite>开始下单</cite></a>
+            </span>
+
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+            </a>
+
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row">
+                <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                    <span class="x-red"></span>收货地址
+                    </label>
+                      <div class="layui-input-inline">
+                          <textarea id="write"  name="write" required=""autocomplete="off" class="layui-textarea" placeholder="请粘贴你淘宝收货地址" onblur="copy_content()"></textarea>
+                      </div>
+                </div>
+                <form class="layui-form" action="/order/add" method="post" enctype="multipart/form-data">
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                  <span class="x-red"></span>寄件人
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" value="{{area.sender_name}}" id="sender_name" name="sender_name" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    <label  class="layui-form-label">
+                  <span class="x-red"></span>寄件人电话
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" value="{{area.sender_mobile}}" id="sender_mobile" name="sender_mobile" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                </div>
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                  <span class="x-red"></span>寄件人省份
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" value="{{area.sender_prov}}" id="sender_prov" name="sender_prov" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    <label  class="layui-form-label">
+                  <span class="x-red"></span>寄件人城市
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" value="{{area.sender_city}}" id="sender_city" name="sender_city" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    <label  class="layui-form-label">
+                  <span  class="x-red"></span>寄件人地址
+              </label>
+              <div class="layui-input-inline">
+                  <input style="width:260%" value="{{area.sender_address}}" type="text" id="sender_address" name="sender_address" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    </div>
+                    <div class="layui-form-item">
+                         <label  class="layui-form-label">
+                  <span class="x-red"></span>收件人
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="recive_name" name="recive_name" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    <label  class="layui-form-label">
+                  <span class="x-red"></span>收件人电话
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="recive_mobile" name="recive_mobile" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+
+                    </div>
+                    <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                  <span class="x-red"></span>收件人省份
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="recive_prov" name="recive_prov" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    <label  class="layui-form-label">
+                  <span class="x-red"></span>收件人城市
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="recive_city" name="recive_city" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    <label  class="layui-form-label">
+                  <span class="x-red"></span>收件人地址
+              </label>
+              <div class="layui-input-inline">
+                  <input style="width:260%" type="text" id="recive_address" name="recive_address" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    </div>
+
+                    <div class="layui-form-item">
+
+                    <label  class="layui-form-label">
+                  <span class="x-red"></span>产品名称
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="itemName" name="itemName" required="" value="{{item and item[0] or ''}}"
+                  autocomplete="off" class="layui-input">
+              </div>
+
+                        <label  class="layui-form-label">
+                  <span class="x-red"></span>产品数量(件)
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="number" name="number" value="{{item and item[1] or '' }}" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                        <label  class="layui-form-label">
+                  <span class="x-red"></span>产品价值(元)
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="itemValue" name="itemValue" value="{{item and item[2] or ''}}" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+                    </div>
+                <div class="layui-form-item">
+                        <label  class="layui-form-label">
+                  <span class="x-red"></span>产品重量(Kg)
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="weight" name="weight" required="" value="{{ data.weight }}"
+                  autocomplete="off" class="layui-input">
+              </div>
+
+
+               </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" lay-filter="add" lay-submit="">
+                        提交订单
+                    </button>
+                </div>
+              </form>
+            </div>
+            </div>
+        <script>
+        layui.use(['form', 'layer'],
+            function () {
+                $ = layui.jquery;
+                var form = layui.form,
+                layer = layui.layer;
+
+            })
+        </script>
+    <script>
+      function copy_content() {
+                var content=$("#write").val();
+                $.ajax({
+                    url:"/copy/content",
+                    type:"POST",
+                    data:{"content":content},
+                    dataType:"json",
+                    success:function (data) {
+                        $("#recive_name").val("");
+                        $("#recive_mobile").val("");
+                        $("#recive_prov").val("");
+                        $("#recive_city").val("");
+                        $("#recive_address").val("");
+                        $('#recive_name').val(data['name']);
+                        $('#recive_mobile').val(data['phone']);
+                        $('#recive_prov').val(data['province']);
+                        $('#recive_city').val(data['city']);
+                        $('#recive_address').val(data['address']);
+                    },
+                    error:function (msg) {
+                        alert("格式错误解析失败")
+
+                    }
+                })
+            }
+    </script>
+
+
+{% endblock %}

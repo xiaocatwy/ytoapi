@@ -1,0 +1,84 @@
+<div class="left-nav">
+    <div id="side-nav">
+        <ul id="nav">
+                <li>
+                <a href="javascript:;">
+                    <i class="layui-icon" lay-tips="圆通订单">&#xe653;</i>
+                    <cite style="font-size: 15px;font-weight: bold" >圆通订单</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                    <ul class="sub-menu">
+                    <li>
+                            <a onclick="xadmin.add_tab('个人信息','/user/info')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px" >个人信息</cite></a>
+                        </li>
+                        <li>
+                            <a onclick="xadmin.add_tab('订单列表','/order/list')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px" >订单列表</cite></a>
+                        </li>
+                        <li>
+                            <a onclick="xadmin.add_tab('开始下单','/order/add')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">开始下单</cite></a>
+                        </li>
+                        <li>
+                            <a onclick="xadmin.add_tab('批量下单','/order/upload')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">批量下单</cite></a>
+                        </li>
+                        {% if users.get("is_admin","") == false %}
+                        <li>
+                            <a onclick="xadmin.add_tab('余额管理','/balance/list')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">余额管理</cite></a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a onclick="xadmin.add_tab('默认地址','/position/list')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">默认地址</cite></a>
+                        </li>
+                        <li>
+                            <a onclick="xadmin.add_tab('充值记录','/pay_report/list')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">充值记录</cite></a>
+                        </li>
+                        {% if users.get("is_admin","") == false %}
+                        <li>
+                            <a onclick="xadmin.add_tab('邀请记录','/user/invite')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">邀请记录</cite></a>
+                        </li>
+                        {% endif %}
+                        {% if users.get("is_admin","") == false %}
+                        <li>
+                            <a onclick="xadmin.add_tab('佣金记录','/user/commission')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">佣金记录</cite></a>
+                        </li>
+                        {% endif %}
+
+
+                        {% if users.get("is_admin","") == true %}
+                        <li>
+                            <a onclick="xadmin.add_tab('用户管理','/user/list')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">用户管理</cite></a>
+                        </li>
+                        {% endif %}
+                        {% if users.get("is_admin","") == true %}
+                        <li>
+                            <a onclick="xadmin.add_tab('财务明细','/balance/all/list')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite style="font-size: 15px">财务明细</cite></a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+
+        </ul>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+{%extends "admin/_base.html"%}
+{%block content%}
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">圆通订单</a>
+                <a>
+                    <cite>订单列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+            </a>
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <form class="layui-form layui-col-space5">
+                            <input type="hidden" name="is_export" id="export_form" value="">
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <input type="text" name="mailNo" value="{{kargs.get('mailNo','')}}" placeholder="物流单号" autocomplete="off" class="layui-input"></div>
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <input type="text" name="sender_name" value="{{kargs.get('sender_name','')}}" placeholder="寄件人" autocomplete="off" class="layui-input"></div>
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <input type="text" name="sender_mobile" value="{{kargs.get('sender_mobile','')}}" placeholder="寄件人电话" autocomplete="off" class="layui-input"></div>
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <input type="text" name="recive_name" value="{{kargs.get('recive_name','')}}" placeholder="收货人" autocomplete="off" class="layui-input"></div>
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <input type="text" name="recive_mobile" value="{{kargs.get('recive_mobile','')}}" placeholder="收货人电话" autocomplete="off" class="layui-input"></div>
+                                <div class="layui-input-inline layui-show-xs-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                        <i class="layui-icon">&#xe615;</i></button>
+                                </div>
+                            </form>
+                        </div>
+                         <div class="layui-card-body layui-table-body layui-table-main">
+                            <table  class="layui-table layui-form">
+                                <thead>
+                                    <tr>
+                                        <th>物流单号</th>
+                                        <th>寄件人</th>
+                                        <th>寄件人电话</th>
+                                        <th>寄件人省份</th>
+                                        <th>寄件人城市</th>
+                                        <th>寄件人地址</th>
+                                        <th>收货人</th>
+                                        <th>收货人电话</th>
+                                        <th>收货人省份</th>
+                                        <th>收货人城市</th>
+                                        <th>收货人地址</th>
+                                        <th>物品信息</th>
+                                        <th>物品重量</th>
+                                        <th>创建时间</th>
+                                        <th>订单佣金</th>
+                                        <th>结算标识</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {%for d in data.result %}
+                                <tr>
+                                        <td>{{ d.mailNo }}</td>
+                                        <td>{{ d.sender_name }}</td>
+                                        <td>{{ d.sender_mobile }}</td>
+                                        <td>{{ d.sender_prov }}</td>
+                                        <td>{{ d.sender_city }}</td>
+                                        <td>{{ d.sender_address }}</td>
+                                        <td>{{ d.recive_name }}</td>
+                                        <td>{{ d.recive_mobile }}</td>
+                                        <td>{{ d.recive_prov }}</td>
+                                        <td>{{ d.recive_city }}</td>
+                                        <td>{{ d.recive_address }}</td>
+                                        <td>{{ d.items }}</td>
+                                        <td>{{ d.weight }}kg</td>
+                                        <td>{{ d.create_time }}</td>
+                                        <td>{{ d.price }}元</td>
+                                        <td>{{ d.settlement_tag }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="layui-card-body ">
+                            {{ data.render() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        layui.use(['form', 'layer'],
+            function () {
+                $ = layui.jquery;
+                laydate = layui.laydate;
+            });
+    </script>
+ {%endblock%}

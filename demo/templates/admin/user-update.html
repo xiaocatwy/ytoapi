@@ -1,0 +1,96 @@
+{%extends "admin/_base.html"%}
+{%block content%}
+    <div class="layui-fluid">
+            <div class="layui-row">
+                <form class="layui-form">
+
+                  <div class="layui-form-item">
+                      <label  class="layui-form-label">
+                          <span class="x-red"></span>用户名
+                      </label>
+                      <div class="layui-input-inline">
+                      <input type="text" id="username" value="{{data.username}}" name="username" required="" lay-verify="required"
+                      autocomplete="off" class="layui-input">
+                  </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                      <label  class="layui-form-label">
+                          <span class="x-red"></span>登录手机号
+                      </label>
+                      <div class="layui-input-inline">
+                      <input type="text" id="phone" value="{{data.phone}}" name="phone" required="" lay-verify="required"
+                      autocomplete="off" class="layui-input">
+                  </div>
+                  </div>
+                    <div class="layui-form-item">
+                     <label class="layui-form-label">层级</label>
+                    <div class="layui-input-inline">
+                        <select id="agent_type" name="agent_type">
+                            <option value="">请选择层级</option>
+                            <{%for x in ["1","2"]%}
+                                {% if data.get("level","")==x %}
+                                    <option  value={{ x }} selected>{{ x }}</option>
+                                {% else %}
+                                    <option value={{ x }} >{{x}}</option>
+                                {%endif%}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                      <label  class="layui-form-label">
+                          <span class="x-red"></span>密码
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="password" name="password" required=""
+                                 autocomplete="off" class="layui-input">
+                  </div>
+                  </div>
+                  <div class="layui-form-item">
+                  <label for="L_repass" class="layui-form-label">
+                  </label>
+                  <button  class="layui-btn" lay-filter="add" lay-submit="">
+                      点击修改
+                  </button>
+                 </div>
+              </form>
+            </div>
+        </div>
+        <script>
+            layui.use(['form', 'layer','laydate'],
+            function () {
+                $ = layui.jquery;
+                laydate = layui.laydate;
+                laydate.render({
+                    elem: '#create_time'
+                  });
+                var form = layui.form,
+                    layer = layui.layer;
+                //监听提交
+                form.on('submit()',
+                function(data) {
+                    console.log(data);
+                    $.ajax({
+                      url:"/user/{{ data.show_id }}",
+                      method:"post",
+                      data:data.field,
+                      dataType:'JSON'
+                    });
+                    //发异步，把数据提交给php
+                    layer.alert("修改成功", {
+                        icon: 6
+                    },
+                    function() {
+                        //关闭当前frame
+                        xadmin.close();
+
+                        // 可以对父窗口进行刷新
+                        xadmin.father_reload();
+                    });
+                    return false;
+                });
+
+            });</script>
+{%endblock%}

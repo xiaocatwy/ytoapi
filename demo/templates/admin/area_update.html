@@ -1,0 +1,158 @@
+{% extends "admin/_base.html" %}
+{% block content %}
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form" id="address" >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>寄件人地址
+                    </label>
+                   <div class="layui-input-inline">
+                         <input type="text" id="sender_name" value="{{ send.sender_name }}" name="sender_name"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>寄件人电话
+                    </label>
+                   <div class="layui-input-inline">
+                         <input type="text" id="sender_mobile" value="{{ send.sender_mobile }}" name="sender_mobile"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+             <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>寄件人省份
+                    </label>
+                    <div class="layui-input-inline">
+                                    <select name="sender_prov" id="sender_prov" lay-filter="sender_prov">
+                                            <option value="" >请选择省份</option>
+                                              {%for p in areas %}
+                                                  {% if send.sender_prov== p.name %}
+                                                     <option value={{p.code}} selected >{{ p.name }}</option>
+                                                  {% else %}
+                                                    <option value={{p.code}}  >{{ p.name }}</option>
+                                                  {% endif %}
+                                              {%endfor%}
+                                    </select>
+                                </div>
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>寄件人城市
+                    </label>
+                    <div class="layui-input-inline">
+                         <select name="sender_city" id="sender_city" lay-filter="sender_city">
+                                <option value="" >请选择城市</option>
+                                {% if send.sender_city %}
+                                     <option value="{{send.sender_city }}" selected >{{send.sender_city }}</option>
+                                {%endif%}
+                         </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>寄件人区域
+                    </label>
+                   <div class="layui-input-inline">
+                         <select name="sender_area" id="sender_area" lay-filter="sender_area">
+                                <option value="" >请选择区域</option>
+                                {% if send.sender_area %}
+                                     <option value="{{send.sender_area }}" selected >{{send.sender_area }}</option>
+                                {%endif%}
+                         </select>
+                    </div>
+                    <label class="layui-form-label">
+                        <span class="x-red"></span>寄件人地址
+                    </label>
+                   <div class="layui-input-inline">
+                         <input type="text" id="sender_address" value="{{ send.sender_address }}" name="sender_address"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            <div class="layui-form-item">
+            <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button id="close_refush" class="layui-btn" >
+                        点击修改
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        //区域选择
+            layui.use(['form'], function() {
+                form=layui.form;
+                form.on('select(sender_prov)', function(data){ 
+                    var val=data.value;
+                    $.getJSON("/area/get",{code:val},function(data){
+                          $('#city').html('<option value="" >请选择城市</option>');
+                        $.each(data,function(i,item){
+                                var option = document.createElement("option");  // 创建添加option属性
+                                option.setAttribute("value",item.code); // 给option的value添加值
+                                option.innerText=item.name;     // 打印option对应的纯文本
+                                sender_city.appendChild(option);           //给select添加option子标签
+                                form.render("select");
+                        })
+                    });
+
+                });
+
+                form.on('select(sender_city)', function(data){ 
+                   var val=data.value;
+                    $.getJSON("/area/get",{code:val},function(data){
+                        $('#area').html('<option value="" >请选择区域</option>');
+                        $.each(data,function(i,item){
+                          var option = document.createElement("option");  // 创建添加option属性
+                                option.setAttribute("value",item.code); // 给option的value添加值
+                                option.innerText=item.name;     // 打印option对应的纯文本
+                                sender_area.appendChild(option);           //给select添加option子标签
+                                form.render("select");
+                        })
+                    });
+                });
+             });
+        </script>
+<script>
+            layui.use(['form', 'layer'],
+            function() {
+                $ = layui.jquery;
+                var form = layui.form,
+                layer = layui.layer;
+                //监听提交
+                 form.on('submit()',
+                function(data) {
+                    console.log(data);
+                    // $.ajax({
+                    //   url:"/position/update",
+                    //   method:"post",
+                    //   data:form.field,
+                    //   dataType:'JSON'
+                    // });
+                    $.post("/position/update/{{send.show_id}}",$("#address").serialize(),function(data){
+                            if(data.code==1){
+                                layer.msg(data.info, {
+                                    icon: 1,
+                                    time: 1000
+                                })
+                            }else{
+                                layer.msg(data.info, {
+                                    icon: 1,
+                                    time: 1000
+                                })
+                            }
+                    },'json')
+
+                    //发异步，把数据提交给php
+                    layer.alert("修改成功", {
+                        icon: 6
+                    },
+                    function() {
+                        //关闭当前frame
+                        xadmin.close();
+                        // 可以对父窗口进行刷新
+                        xadmin.father_reload();
+                    });
+                    return false;
+                });
+
+            });</script>
+{% endblock %}

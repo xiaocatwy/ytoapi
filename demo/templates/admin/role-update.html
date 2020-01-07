@@ -1,0 +1,89 @@
+{%extends "admin/_base.html"%}
+{%block content%}
+    <div class="layui-fluid">
+            <div class="layui-row">
+                <form class="layui-form">
+                  <div class="layui-form-item">
+                      <label  class="layui-form-label">
+                          <span class="x-red"></span>登录账号
+                      </label>
+                      <div class="layui-input-inline">
+                          <input value="{{ data.get("username","") }}" type="text" id="username" name="username" required="" lay-verify="required"
+                                 autocomplete="off" class="layui-input">
+                      </div>
+                  </div>
+                    <div class="layui-form-item">
+                      <label  class="layui-form-label">
+                          <span class="x-red"></span>登录密码
+                      </label>
+                      <div class="layui-input-inline">
+                          <input type="text" id="password" name="password" required=""
+                                 autocomplete="off" class="layui-input">
+                      </div>
+                  </div>
+                    <div class="layui-form-item">
+                      <label  class="layui-form-label">
+                          <span class="x-red"></span>使用者姓名
+                      </label>
+                      <div class="layui-input-inline">
+                          <input value="{{ data.get("nickname","") }}" type="text" id="nickname" name="nickname" required=""
+                                 autocomplete="off" class="layui-input">
+                      </div>
+                  </div>
+                    <div class="layui-form-item">
+                      <label  class="layui-form-label">
+                          <span class="x-red"></span>分配权限
+                      </label>
+                      <div class="layui-input-block" >
+                          {% for role in ["总权限","设备权限","广告权限","分成权限","代理权限","财务权限"] %}
+                               {% if role in data["permision_list"] %}
+                                <input type="checkbox" name="{{ role }}" lay-skin="primary"  value="{{ role }}" title="{{ role }}" checked>
+                              {% else %}
+                                <input type="checkbox" name="{{ role }}" lay-skin="primary"  value="{{ role }}" title="{{ role }}" >
+                              {% endif %}
+                          {% endfor %}
+                      </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                  <label for="L_repass" class="layui-form-label">
+                  </label>
+                  <button  class="layui-btn" lay-filter="add" lay-submit="">
+                      点击修改
+                  </button>
+                 </div>
+              </form>
+            </div>
+        </div>
+        <script>
+            layui.use(['form', 'layer'],
+            function() {
+                $ = layui.jquery;
+                var form = layui.form,
+                layer = layui.layer;
+                //监听提交
+                form.on('submit()',
+                function(data) {
+                    console.log(data);
+                    $.ajax({
+                      url:"/admin/{{ data.show_id }}",
+                      method:"post",
+                      data:data.field,
+                      dataType:'JSON'
+                    });
+                    //发异步，把数据提交给php
+                    layer.alert("增加成功", {
+                        icon: 6
+                    },
+                    function() {
+                        //关闭当前frame
+                        xadmin.close();
+
+                        // 可以对父窗口进行刷新
+                        xadmin.father_reload();
+                    });
+                    return false;
+                });
+
+            });</script>
+{%endblock%}

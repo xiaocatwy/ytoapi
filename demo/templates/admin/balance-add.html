@@ -1,0 +1,53 @@
+{%extends "admin/_base.html"%}
+{%block content%}
+
+        <div class="layui-fluid">
+           <div class="layui-row">
+                <form class="layui-form" action="/balance/add" method="post">
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                  <span class="x-red">{{message}}</span>充值金额
+              </label>
+              <div class="layui-input-inline">
+<input type="text" value="" class="layui-input"  min="100" name="money" οninput="value=value.replace(/[^\d]/g,'')" onkeyup="value=zhzs(this.value)" placeholder="充值金>额最低100">
+</div>
+                    <label  class="layui-form-label">
+                  <span class="x-red"></span>付款方式
+              </label>
+              <div class="layui-input-inline">
+                 <select name="platform">
+                            <option  value="支付宝">支付宝</option>
+                          </select>
+              </div>
+                </div>
+                    <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" lay-filter="add" lay-submit="">
+                        点击充值
+                    </button>
+                </div>
+                    </form>
+        </div>
+            </div>
+    <script>
+        layui.use(['form', 'layer'],
+            function() {
+                $ = layui.jquery;
+                var form = layui.form,
+                    layer = layui.layer;
+            })
+
+        function zhzs(value){
+
+            value = value.replace(/[^\d]/g,'');
+            if(''!=value){
+                value = parseInt(value);
+            }
+            if(value<100){
+               value = 100;
+            }
+            return value;
+        }
+    </script>
+ {%endblock%}
